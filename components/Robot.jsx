@@ -17,7 +17,7 @@ function Robot() {
   };
 
   const handleClick = () => {
-    inputValue.toLowerCase()
+    console.log(inputValue)
     if (placed && inputValue.startsWith("place")) {
       toast.error("Robot has already been placed");
     }
@@ -126,7 +126,7 @@ function Robot() {
       </h1>
       <input
         onKeyDown={handleKeyDown}
-        value={inputValue}
+        value={inputValue.toLowerCase()}
         onChange={(e) => setinputValue(e.target.value)}
         placeholder="tell the robot what to do..."
         type="text"
