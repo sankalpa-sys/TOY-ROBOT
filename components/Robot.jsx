@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 
 function Robot() {
   const [placed, setPlaced] = useState(false);
@@ -8,17 +9,16 @@ function Robot() {
   const [inputValue, setinputValue] = useState("");
 
   const handleResetClicked = () => {
-    console.log(direction);
     setPlaced(false);
     setdirection("");
     setX(0);
     setY(0);
-    console.log("Reset Done!");
+    toast.success("Reset Done!");
   };
 
   const handleClick = () => {
     if (placed && inputValue.startsWith("place")) {
-      console.log("Robot has already been placed");
+      toast.error("Robot has already been placed");
     }
 
     if (!placed && inputValue.startsWith("place")) {
@@ -28,7 +28,7 @@ function Robot() {
         const c = b[1].split(",");
 
         const d = [b[0], ...c];
-        console.log(d);
+        // console.log(d);
 
         if (d.length === 4) {
           setPlaced(true);
@@ -36,18 +36,20 @@ function Robot() {
           setY(parseInt(d[2]));
           setdirection(d[3]);
           setinputValue("");
+          toast.success("Robot placed")
         }
       } catch (error) {
-        console.log(error, "Please type in the correct format!");
+        console.log(error);
+        toast.error("Please type in the correct format!")
       }
     } else if (!placed) {
-      console.log("The robot hasn't been placed yet!");
+      toast.error("The robot hasn't been placed yet!");
     } else {
       if (inputValue === "report") {
-        console.log(`Output: ${X}, ${Y}, ${direction}`);
+        toast.success(`Output: ${X}, ${Y}, ${direction}`);
         setinputValue("");
       } else if (inputValue === "left") {
-        console.log("turened left");
+        toast.success("Turned left");
         if (direction === "north") {
           setdirection("west");
         } else if (direction === "west") {
@@ -59,7 +61,7 @@ function Robot() {
         }
         setinputValue("");
       } else if (inputValue === "right") {
-        console.log("Turned right");
+        toast.success("Turned right");
         if (direction === "north") {
           setdirection("east");
         } else if (direction === "west") {
@@ -71,57 +73,58 @@ function Robot() {
         }
         setinputValue("");
       } else if (inputValue === "move") {
-        console.log("Move");
+        toast.success(`Moved ${direction}`);
         if (direction === "north" && Y === 4) {
-          console.log(
+          toast.error(
             "The robot cant move forward in that direction. It might fall off the table."
           );
         } else if (direction === "north" && Y < 4) {
           setY(Y + 1);
-          console.log("Moved North");
+        //   console.log("Moved North");
         }
         if (direction === "south" && Y === 0) {
-          console.log(
+          toast.error(
             "The robot cant move forward in that direction. It might fall off the table."
           );
         } else if (direction === "south" && Y > 0) {
           setY(Y - 1);
-          console.log("Moved South");
+        //   console.log("Moved South");
         }
         if (direction === "east" && X === 4) {
-          console.log(
+          toast.error(
             "The robot cant move forward in that direction. It might fall off the table."
           );
         } else if (direction === "east" && X < 4) {
           setX(X + 1);
-          console.log("Moved east");
+        //   console.log("Moved east");
         }
         if (direction === "west" && X === 0) {
-          console.log(
+          toast.error(
             "The robot cant move forward in that direction. It might fall off the table."
           );
         } else if (direction === "west" && X > 0) {
           setX(X - 1);
-          console.log("Moved west");
+        //   console.log("Moved west");
         }
         setinputValue("");
       }
     }
   };
 
-
   const handleKeyDown = (e) => {
-    if (e.key === 'Enter') {
-        handleClick()
-      }
-  }
+    if (e.key === "Enter") {
+      handleClick();
+      setinputValue("")
+    }
+  };
   return (
     <div className="flex flex-col space-y-8 items-center justify-center h-full">
+      <Toaster position="top-center" reverseOrder={false} />
       <h1 className="font-bold text-orange-600 mr-48">
         Lets play with the robot
       </h1>
       <input
-      onKeyDown={handleKeyDown}
+        onKeyDown={handleKeyDown}
         value={inputValue}
         onChange={(e) => setinputValue(e.target.value)}
         placeholder="tell the robot what to do..."
