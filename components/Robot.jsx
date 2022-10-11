@@ -13,7 +13,7 @@ function Robot() {
     setdirection("");
     setX(0);
     setY(0);
-    toast.success("Reset Done!");
+    toast.success("Reset Done!", {id: "reset"});
   };
 
   const handleClick = () => {
@@ -41,13 +41,13 @@ function Robot() {
         }
       } catch (error) {
         console.log(error);
-        toast.error("Please type in the correct format!")
+        toast.error("Please type in the correct format!", {id: "correctFormat"})
       }
     } else if (!placed) {
-      toast.error("The robot hasn't been placed yet!");
+      toast.error("The robot hasn't been placed yet!", {id: "notPlaced"});
     } else {
       if (inputValue === "report") {
-        toast.success(`Output: ${X}, ${Y}, ${direction}`);
+        toast.success(`Output: ${X}, ${Y}, ${direction}`, {id: "report"});
         setinputValue("");
       } else if (inputValue === "left") {
         toast.success("Turned left");
@@ -74,38 +74,38 @@ function Robot() {
         }
         setinputValue("");
       } else if (inputValue === "move") {
-        toast.success(`Moved ${direction}`);
+        
         if (direction === "north" && Y === 4) {
           toast.error(
-            "The robot cant move forward in that direction. It might fall off the table."
+            "The robot cant move forward in that direction. It might fall off the table.",{id: "north"}
           );
         } else if (direction === "north" && Y < 4) {
           setY(Y + 1);
-        //   console.log("Moved North");
+        toast.success("Moved north")
         }
         if (direction === "south" && Y === 0) {
           toast.error(
-            "The robot cant move forward in that direction. It might fall off the table."
+            "The robot cant move forward in that direction. It might fall off the table.", {id: "south"}
           );
         } else if (direction === "south" && Y > 0) {
           setY(Y - 1);
-        //   console.log("Moved South");
+          toast.success("Moved south",{id: "south"})
         }
         if (direction === "east" && X === 4) {
           toast.error(
-            "The robot cant move forward in that direction. It might fall off the table."
+            "The robot cant move forward in that direction. It might fall off the table.", {id:"east"}
           );
         } else if (direction === "east" && X < 4) {
           setX(X + 1);
-        //   console.log("Moved east");
+          toast.success("Moved east")
         }
         if (direction === "west" && X === 0) {
           toast.error(
-            "The robot cant move forward in that direction. It might fall off the table."
+            "The robot cant move forward in that direction. It might fall off the table.",{id: "west"}
           );
         } else if (direction === "west" && X > 0) {
           setX(X - 1);
-        //   console.log("Moved west");
+          toast.success("Moved west")
         }
         setinputValue("");
       }
@@ -121,7 +121,7 @@ function Robot() {
   return (
     <div className="flex flex-col space-y-8 items-center justify-center h-full">
       <Toaster position="top-center" reverseOrder={false} />
-      <h1 className="font-bold text-orange-600 mr-48">
+      <h1 className="font-bold text-orange-600 md:mr-48 mr-24">
         Lets play with the robot
       </h1>
       <input
@@ -130,10 +130,10 @@ function Robot() {
         onChange={(e) => setinputValue(e.target.value)}
         placeholder="tell the robot what to do..."
         type="text"
-        className="h-10 w-96 placeholder:lowercase uppercase outline-none bg-gray-700 px-2 py-4 shadow-lg shadow-red-400/50"
+        className="h-10 md:w-96 w-72 placeholder:lowercase uppercase outline-none bg-gray-700 px-2 py-4 shadow-lg shadow-red-400/50"
       />
 
-      <div className="border p-10 absolute top-0 left-20">
+      <div className="border p-10 absolute md:top-0 md:left-20 left-28 top-8">
         <h1 className="font-bold text-red-500 uppercase mb-5 ">Inputs</h1>
         <ul className="text-sm">
           <li>PLACE X,Y,F</li>
@@ -143,7 +143,7 @@ function Robot() {
         </ul>
       </div>
 
-      <div className="space-x-4 mr-[140px]">
+      <div className="space-x-4 md:mr-[140px] mr-[24px]">
         <button
           disabled={inputValue === ""}
           onClick={handleClick}
