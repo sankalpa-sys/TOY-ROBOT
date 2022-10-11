@@ -17,6 +17,7 @@ function Robot() {
   };
 
   const handleClick = () => {
+    inputValue.toLowerCase()
     if (placed && inputValue.startsWith("place")) {
       toast.error("Robot has already been placed");
     }
