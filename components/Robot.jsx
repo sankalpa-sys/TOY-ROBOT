@@ -53,11 +53,11 @@ function Robot() {
         setinputValue("");
       } else if (inputValue.toLowerCase() === "left") {
         toast.success("Turned left");
-        if (direction === "north") {
+        if (direction.toLowerCase() === "north") {
           setdirection("west");
-        } else if (direction === "west") {
+        } else if (direction.toLowerCase() === "west") {
           setdirection("south");
-        } else if (direction === "south") {
+        } else if (direction.toLowerCase() === "south") {
           setdirection("east");
         } else {
           setdirection("north");
@@ -65,50 +65,50 @@ function Robot() {
         setinputValue("");
       } else if (inputValue.toLowerCase() === "right") {
         toast.success("Turned right");
-        if (direction === "north") {
+        if (direction.toLowerCase() === "north") {
           setdirection("east");
-        } else if (direction === "west") {
+        } else if (direction.toLowerCase() === "west") {
           setdirection("north");
-        } else if (direction === "south") {
+        } else if (direction.toLowerCase() === "south") {
           setdirection("west");
         } else {
           setdirection("south");
         }
         setinputValue("");
       } else if (inputValue.toLowerCase() === "move") {
-        if (direction === "north" && Y === 4) {
+        if (direction.toLowerCase() === "north" && Y === 4) {
           toast.error(
             "The robot cant move forward in that direction. It might fall off the table.",
             { id: "north" }
           );
-        } else if (direction === "north" && Y < 4) {
+        } else if (direction.toLowerCase() === "north" && Y < 4) {
           setY(Y + 1);
           toast.success("Moved north");
         }
-        if (direction === "south" && Y === 0) {
+        if (direction.toLowerCase() === "south" && Y === 0) {
           toast.error(
             "The robot cant move forward in that direction. It might fall off the table.",
             { id: "south" }
           );
-        } else if (direction === "south" && Y > 0) {
+        } else if (direction.toLowerCase() === "south" && Y > 0) {
           setY(Y - 1);
           toast.success("Moved south", { id: "south" });
         }
-        if (direction === "east" && X === 4) {
+        if (direction.toLowerCase() === "east" && X === 4) {
           toast.error(
             "The robot cant move forward in that direction. It might fall off the table.",
             { id: "east" }
           );
-        } else if (direction === "east" && X < 4) {
+        } else if (direction.toLowerCase() === "east" && X < 4) {
           setX(X + 1);
           toast.success("Moved east");
         }
-        if (direction === "west" && X === 0) {
+        if (direction.toLowerCase() === "west" && X === 0) {
           toast.error(
             "The robot cant move forward in that direction. It might fall off the table.",
             { id: "west" }
           );
-        } else if (direction === "west" && X > 0) {
+        } else if (direction.toLowerCase() === "west" && X > 0) {
           setX(X - 1);
           toast.success("Moved west");
         }
@@ -116,6 +116,7 @@ function Robot() {
       }
     }
     console.log(inputValue);
+    console.log(direction)
   };
 
   const handleKeyDown = (e) => {
