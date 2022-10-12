@@ -13,16 +13,16 @@ function Robot() {
     setdirection("");
     setX(0);
     setY(0);
-    toast.success("Reset Done!", {id: "reset"});
+    toast.success("Reset Done!", { id: "reset" });
   };
 
   const handleClick = () => {
-    console.log(inputValue)
+   
     if (placed && inputValue.startsWith("place")) {
       toast.error("Robot has already been placed");
     }
 
-    if (!placed && inputValue.startsWith("place")) {
+    if (!placed && inputValue.toLowerCase().startsWith("place")) {
       try {
         const b = inputValue.split(" ");
 
@@ -37,19 +37,21 @@ function Robot() {
           setY(parseInt(d[2]));
           setdirection(d[3]);
           setinputValue("");
-          toast.success("Robot placed")
+          toast.success("Robot placed");
         }
       } catch (error) {
         console.log(error);
-        toast.error("Please type in the correct format!", {id: "correctFormat"})
+        toast.error("Please type in the correct format!", {
+          id: "correctFormat",
+        });
       }
     } else if (!placed) {
-      toast.error("The robot hasn't been placed yet!", {id: "notPlaced"});
+      toast.error("The robot hasn't been placed yet!", { id: "notPlaced" });
     } else {
-      if (inputValue === "report") {
-        toast.success(`Output: ${X}, ${Y}, ${direction}`, {id: "report"});
+      if (inputValue.toLowerCase() === "report") {
+        toast.success(`Output: ${X}, ${Y}, ${direction}`, { id: "report" });
         setinputValue("");
-      } else if (inputValue === "left") {
+      } else if (inputValue.toLowerCase() === "left") {
         toast.success("Turned left");
         if (direction === "north") {
           setdirection("west");
@@ -61,7 +63,7 @@ function Robot() {
           setdirection("north");
         }
         setinputValue("");
-      } else if (inputValue === "right") {
+      } else if (inputValue.toLowerCase() === "right") {
         toast.success("Turned right");
         if (direction === "north") {
           setdirection("east");
@@ -73,49 +75,53 @@ function Robot() {
           setdirection("south");
         }
         setinputValue("");
-      } else if (inputValue === "move") {
-        
+      } else if (inputValue.toLowerCase() === "move") {
         if (direction === "north" && Y === 4) {
           toast.error(
-            "The robot cant move forward in that direction. It might fall off the table.",{id: "north"}
+            "The robot cant move forward in that direction. It might fall off the table.",
+            { id: "north" }
           );
         } else if (direction === "north" && Y < 4) {
           setY(Y + 1);
-        toast.success("Moved north")
+          toast.success("Moved north");
         }
         if (direction === "south" && Y === 0) {
           toast.error(
-            "The robot cant move forward in that direction. It might fall off the table.", {id: "south"}
+            "The robot cant move forward in that direction. It might fall off the table.",
+            { id: "south" }
           );
         } else if (direction === "south" && Y > 0) {
           setY(Y - 1);
-          toast.success("Moved south",{id: "south"})
+          toast.success("Moved south", { id: "south" });
         }
         if (direction === "east" && X === 4) {
           toast.error(
-            "The robot cant move forward in that direction. It might fall off the table.", {id:"east"}
+            "The robot cant move forward in that direction. It might fall off the table.",
+            { id: "east" }
           );
         } else if (direction === "east" && X < 4) {
           setX(X + 1);
-          toast.success("Moved east")
+          toast.success("Moved east");
         }
         if (direction === "west" && X === 0) {
           toast.error(
-            "The robot cant move forward in that direction. It might fall off the table.",{id: "west"}
+            "The robot cant move forward in that direction. It might fall off the table.",
+            { id: "west" }
           );
         } else if (direction === "west" && X > 0) {
           setX(X - 1);
-          toast.success("Moved west")
+          toast.success("Moved west");
         }
         setinputValue("");
       }
     }
+    console.log(inputValue);
   };
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       handleClick();
-      setinputValue("")
+      setinputValue("");
     }
   };
   return (
@@ -126,11 +132,11 @@ function Robot() {
       </h1>
       <input
         onKeyDown={handleKeyDown}
-        value={inputValue.toLowerCase()}
+        value={inputValue}
         onChange={(e) => setinputValue(e.target.value)}
         placeholder="tell the robot what to do..."
         type="text"
-        className="h-10 md:w-96 w-72 placeholder:lowercase uppercase outline-none bg-gray-700 px-2 py-4 shadow-lg shadow-red-400/50"
+        className="h-10 md:w-96 w-72 placeholder:lowercase uppercase  outline-none bg-gray-700 px-2 py-4 shadow-lg shadow-red-400/50"
       />
 
       <div className="border p-10 absolute md:top-0 md:left-20 left-28 top-8">
